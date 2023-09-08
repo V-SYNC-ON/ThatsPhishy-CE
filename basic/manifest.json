@@ -1,10 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Hola Extensions",
-  "description": "Base Level Extension",
+  "name": "Focus Mode",
+  "description": "Focus and study well dum dum",
   "version": "1.0",
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": "images/hello_icon.png"
-  }
+  },
+  "background": "background.js", 
+  "permission": ["activeTab"]
 }
