@@ -8,5 +8,5 @@
     "default_icon": "images/hello_icon.png"
   },
   "background": "background.js", 
-  "permission": ["activeTab", "scripting"]
+  "permissions": ["activeTab", "scripting"]
 }
