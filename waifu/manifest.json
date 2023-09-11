@@ -15,8 +15,21 @@
   "background": {
     "service_worker": "background.js" 
   },
+  "content_scripts": [
+    {
+      "js": ["popup.js"],
+      "matches": [
+          "https://*/*"
+      ]
+    }
+  ],
   "permissions": [
       "tabs",
-      "nativeMessaging"
+      "nativeMessaging",
+      "webRequest",
+      "activeTab"
+  ],
+  "host_permissions": [
+      "https://thats-phishy.onrender.com/predict"
   ]
 }
