@@ -15,6 +15,9 @@ body {
   --grid-color: #F2FFFF;
   --paper-color: #fff;
 
+  --dimen-width: 350px;
+  --dimen-height: 400px;
+
   background-color: var(--paper-color);
   background-size: var(--grid-dash) var(--grid-dash), var(--grid-size) var(--grid-size);
   background-image:
@@ -38,7 +41,7 @@ body {
 /* Search Screen */ 
 predict-container {
     height: fit-content;
-    width: 350px;
+    width: var(--dimen-width);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -48,8 +51,7 @@ predict-content {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 80%;
-    height: 400px;
+    height: var(--dimen-height);
     margin: auto;
     max-width: 80rem;
     align-items: center;
@@ -81,4 +83,59 @@ predict-content button {
     font-family: Syne, sans-serif;
 }
 
+/* Results Screen */
+
+result-container {
+    margin: auto;
+    background: rgba(255, 255, 255, 0.50);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5rem;
+    gap: 2rem;
+    box-sizing: border-box;
+}
+
+result-description {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+result-percentage {
+    font-family: DM Sans, sans-serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    align-self: center;
+}
+
+result-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: DM Sans, sans-serif;
+    font-size: 1em;
+    color: #5F6368;
+}
+
+result-stats p {
+    font-weight: 300;
+}
+
+result-stats span {
+    font-weight: bold;
+    color: black;
+}
+
+result-stats .safe {
+    color: green;
+}
+
+result-stats .not-recommended {
+    color: brown;
+}
+
+result-stats .risky {
+    color: red;
+}
 

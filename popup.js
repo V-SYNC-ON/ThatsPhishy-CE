@@ -1,7 +1,12 @@
-const result = document.getElementById("result")
+// Reference to all result tags
+const description = document.getElementById("description")
+const domain = document.getElementById("domain")
+const prediction = document.getElementById("prediction")
+const statusRank  = document.getElementById("status")
+
 const button = document.querySelector("button")
 
-result.textContent = '...'
+prediction.textContent = '...'
 
 let queryOptions = { active: true, lastFocusedWindow: true };
 let [tab] = await chrome.tabs.query(queryOptions);
@@ -14,12 +19,15 @@ function getCurrentTab() {
     console.log(tab.url)
 
     chrome.runtime.sendMessage(
-        req, score => {
+        req, res => {
             if(chrome.runtime.lastError){
                 console.log("Timeout")
                 setTimeout(getCurrentTab, 1000)
             } else {
-                result.textContent = score
+                description.textContent = res.description
+                domain.textContent = res.domain
+                prediction.textContent = res.prediction + "/100"
+                statusRank.textContent = res.status
             }
         }
     )
@@ -28,5 +36,3 @@ function getCurrentTab() {
 
 
 button.addEventListener("click", getCurrentTab)
-// TODO: display all fields in response
-

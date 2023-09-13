@@ -15,7 +15,28 @@
             </predict-content>
         </predict-container>
 
-        <p id="result"></p>
+        <result-container>
+            <result-description>
+                <result-percentage id="prediction"></result-percentage>
+                <result-stats>
+                    <p>
+                        <span>Website Name :</span> 
+                        <umu id="domain"></umu>
+                    </p>
+
+                    <p>
+                        <span>Category : </span>
+                        <umu class="risky" id="status"> </umu>
+                    </p>
+
+                    <p>
+                        <span>Description :</span><br><br><br>
+                        <umu id="description"> </umu>
+                    </p>
+                </result-stats>
+            </result-description>
+        </result-container>
+        
     <script src="./popup.js" type="module"></script>
   </body>
 </html>
