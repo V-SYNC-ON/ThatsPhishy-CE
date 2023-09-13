@@ -28,4 +28,5 @@ function getCurrentTab() {
 
 
 button.addEventListener("click", getCurrentTab)
+// TODO: display all fields in response
 

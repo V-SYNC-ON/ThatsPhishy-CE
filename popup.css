@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Oxanium:wght@400;500;700&family=Syne:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+
+  --grid-size: 10px;
+  --grid-strength: 1px;
+  --grid-dash: 1px;
+  --grid-gap: 2px;
+  --grid-color: #F2FFFF;
+  --paper-color: #fff;
+
+  background-color: var(--paper-color);
+  background-size: var(--grid-dash) var(--grid-dash), var(--grid-size) var(--grid-size);
+  background-image:
+  linear-gradient(to bottom, transparent var(--grid-gap), var(--paper-color) var(--grid-gap)), 
+  linear-gradient(to right, var(--grid-color) var(--grid-strength), transparent var(--grid-strength)),
+  linear-gradient(to right, transparent var(--grid-gap), var(--paper-color) var(--grid-gap)),
+  linear-gradient(to bottom, var(--grid-color) var(--grid-strength), transparent var(--grid-strength));
+
+}
+
+#root {
+  width: 100%;
+}
+
+.Toastify__toast-body {
+  font-family: Oxanium, sans-serif;
+}
+
+/* credits: @niyasrad */
+
+/* Search Screen */ 
+predict-container {
+    height: fit-content;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+predict-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 80%;
+    height: 400px;
+    margin: auto;
+    max-width: 80rem;
+    align-items: center;
+    justify-content: center;
+    font-family: Syne, sans-serif;
+}
+
+h1 {
+    font-size: 2.2em;
+    font-style: italic;
+    color: #7F5BFF;
+    margin-top: 2rem;
+    text-align: center;
+    user-select: none;
+}
+
+predict-content button {
+    border-radius: 1rem;
+    border: none;
+    padding: 1rem 4rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2em;
+    letter-spacing: 0.05rem;
+    line-height: 22px;
+    cursor: pointer;
+    background: linear-gradient(315deg, #4624C2 0%, #7F5BFF 100%);
+    box-shadow: 0px 20px 40px 0px #BDACFB, 3px 1px 15px 0px rgba(255, 255, 255, 0.50) inset, 0px -3px 10px 0px rgba(0, 0, 0, 0.37) inset;
+    font-family: Syne, sans-serif;
+}
+
+
