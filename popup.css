@@ -87,6 +87,7 @@ predict-content button {
 
 result-container {
     margin: auto;
+    width: var(--dimen-width);
     background: rgba(255, 255, 255, 0.50);
     display: flex;
     justify-content: space-between;
@@ -139,3 +140,10 @@ result-stats .risky {
     color: red;
 }
 
+/* Hide Results Screen */ 
+#schrodinger-box result-container {
+    visibility: hidden;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}

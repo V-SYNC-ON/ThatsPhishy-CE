@@ -11,6 +11,21 @@ prediction.textContent = '...'
 let queryOptions = { active: true, lastFocusedWindow: true };
 let [tab] = await chrome.tabs.query(queryOptions);
 
+function toggleScreens() {
+    const predictContainer = document.getElementById("predict-container")
+    const resultContainer = document.getElementById("result-container")
+    
+    // Make results Container visible
+    resultContainer.style.visibility = "visible";
+    resultContainer.style.display = "block";
+    resultContainer.style.opacity = "1";
+
+    // Make Search button and stuffs hidden
+    predictContainer.style.visibility = "hidden";
+    predictContainer.style.display = "none";
+    predictContainer.style.opacity = "0";
+}
+
 function getCurrentTab() {
     var req = {
             type: "predict",
@@ -28,6 +43,8 @@ function getCurrentTab() {
                 domain.textContent = res.domain
                 prediction.textContent = res.prediction + "/100"
                 statusRank.textContent = res.status
+
+                toggleScreens()
             }
         }
     )
