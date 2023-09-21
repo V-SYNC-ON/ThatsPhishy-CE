@@ -15,8 +15,8 @@ body {
   --grid-color: #F2FFFF;
   --paper-color: #fff;
 
-  --dimen-width: 350px;
-  --dimen-height: 400px;
+  --dimen-width: 21rem;
+  --dimen-height: 25rem;
 
   background-color: var(--paper-color);
   background-size: var(--grid-dash) var(--grid-dash), var(--grid-size) var(--grid-size);
@@ -74,9 +74,8 @@ predict-content button {
     padding: 1rem 4rem;
     color: white;
     font-weight: 700;
-    font-size: 1.2em;
+    font-size: 1.3em;
     letter-spacing: 0.05rem;
-    line-height: 22px;
     cursor: pointer;
     background: linear-gradient(315deg, #4624C2 0%, #7F5BFF 100%);
     box-shadow: 0px 20px 40px 0px #BDACFB, 3px 1px 15px 0px rgba(255, 255, 255, 0.50) inset, 0px -3px 10px 0px rgba(0, 0, 0, 0.37) inset;
@@ -88,11 +87,12 @@ predict-content button {
 result-container {
     margin: auto;
     width: var(--dimen-width);
+    height: var(--dimen-height);
     background: rgba(255, 255, 255, 0.50);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5rem;
+    padding: 3rem;
     gap: 2rem;
     box-sizing: border-box;
 }
@@ -105,7 +105,7 @@ result-description {
 
 result-percentage {
     font-family: DM Sans, sans-serif;
-    font-size: 2.5em;
+    font-size: 3em;
     font-weight: 700;
     align-self: center;
 }
@@ -113,9 +113,9 @@ result-percentage {
 result-stats {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     font-family: DM Sans, sans-serif;
-    font-size: 1em;
+    font-size: 1.25em;
     color: #5F6368;
 }
 
