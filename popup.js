@@ -28,9 +28,30 @@ async function getCurrentTab() {
     [tab] = await chrome.tabs.query(queryOptions);
 }
 
+async function getPageContents() {
+
+    // Execute a content script to extract text content
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: () => {
+            const textContent = document.body.textContent;
+            return textContent;
+        },
+    }, (result) => {
+        if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+            return;
+        }
+
+      const extractedText = result[0];
+      console.log("Text Content:", extractedText.result);
+    });
+}
+
 async function getPredictionResults() {
 
     await getCurrentTab()
+    await getPageContents()
     var req = {
             type: "predict",
             url: tab.url

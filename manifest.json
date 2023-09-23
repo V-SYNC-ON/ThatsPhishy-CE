@@ -27,10 +27,12 @@
       "tabs",
       "nativeMessaging",
       "webRequest",
-      "activeTab"
+      "activeTab",
+      "scripting"
   ],
   "host_permissions": [
       "https://thats-phishy.onrender.com/predict",
-      "http://127.0.0.1:8080/predict"
+      "http://127.0.0.1:8080/predict",
+      "*://*/*"
   ]
 }
