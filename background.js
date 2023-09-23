@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(predict)
 function predict (req, sender, sendResponse) {
     console.log("predict execution")
     if(req.type === "predict"){
-        fetch('https://thats-phishy.onrender.com/predict', {
+        fetch('http://127.0.0.1:8080/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

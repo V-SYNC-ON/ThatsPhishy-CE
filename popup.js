@@ -7,9 +7,9 @@ const statusRank  = document.getElementById("status")
 const button = document.querySelector("button")
 
 prediction.textContent = '...'
+var tab
 
 let queryOptions = { active: true, lastFocusedWindow: true };
-let [tab] = await chrome.tabs.query(queryOptions);
 
 function toggleScreens() {
     const predictContainer = document.getElementById("predict-container")
@@ -26,7 +26,12 @@ function toggleScreens() {
     predictContainer.style.opacity = "0";
 }
 
-function getCurrentTab() {
+async function getCurrentTab() {
+    [tab] = await chrome.tabs.query(queryOptions);
+}
+async function getPredictionResults() {
+
+    await getCurrentTab()
     var req = {
             type: "predict",
             url: tab.url
@@ -37,7 +42,7 @@ function getCurrentTab() {
         req, res => {
             if(chrome.runtime.lastError){
                 console.log("Timeout")
-                setTimeout(getCurrentTab, 1000)
+                setTimeout(getPredictionResults, 1000)
             } else {
                 description.textContent = res.description
                 domain.textContent = res.domain
@@ -52,4 +57,4 @@ function getCurrentTab() {
 }
 
 
-button.addEventListener("click", getCurrentTab)
+button.addEventListener("click", getPredictionResults)
