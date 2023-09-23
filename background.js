@@ -3,7 +3,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
 
     if(!changeInfo.url) return 
     let statusText = await updateBadge(changeInfo.url)
-    statusText = statusText.toUpperCase()
+    //statusText = statusText.toUpperCase()
+    statusText = (statusText ?? "UNKNOWN").toUpperCase();
 
     console.log("new " + statusText)
 
@@ -17,9 +18,15 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
             tabId: tabId
         })
 
-    if(statusText == "SAFE")
+    else if(statusText == "SAFE")
         chrome.action.setBadgeBackgroundColor({
             color: "green",
+            tabId: tabId
+        })
+
+    else if(statusText == "UNKNOWN")
+        chrome.action.setBadgeBackgroundColor({
+            color: "gray",
             tabId: tabId
         })
 })
