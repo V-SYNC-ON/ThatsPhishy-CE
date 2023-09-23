@@ -1,4 +1,3 @@
-
 // Reference to all result tags
 const description = document.getElementById("description")
 const domain = document.getElementById("domain")
@@ -7,7 +6,6 @@ const statusRank  = document.getElementById("status")
 
 const button = document.querySelector("button")
 
-// prediction.textContent = '...'
 let queryOptions = { active: true, lastFocusedWindow: true };
 var tab
 
@@ -49,6 +47,11 @@ async function getPredictionResults() {
                 domain.textContent = res.domain
                 prediction.textContent = res.prediction + "/100"
                 statusRank.textContent = res.status
+
+                if(res.status == "Safe") 
+                    statusRank.className = "safe"
+                else if (res.status == "UNKNOWN")
+                    statusRank.className = "not-recommended"
 
                 toggleScreens()
             }
