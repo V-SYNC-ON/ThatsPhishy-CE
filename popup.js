@@ -49,7 +49,6 @@ async function getPageContents() {
 }
 
 async function getPageLinks() {
-
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         function: () => {
@@ -62,8 +61,22 @@ async function getPageLinks() {
             console.error(chrome.runtime.lastError);
             return;
         }
-      const extractedLinks = result[0]
-      console.log("All URLS :", extractedLinks.result);
+        const extractedLinks = result[0]
+
+        var req = {
+            type: "batch",
+            hrefs: extractedLinks.result 
+        }
+
+        chrome.runtime.sendMessage(req, res => {
+            if(chrome.runtime.lastError) {
+                console.log("Timeout")
+                setTimeout(getPageLinks)
+            } else {
+                console.log("success:", res.status)
+            }
+        })
+        // console.log("All URLS :", extractedLinks.result);
     });
 }
 

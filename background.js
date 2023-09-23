@@ -57,6 +57,15 @@ chrome.runtime.onConnect.addListener(port => {
 })
 
 chrome.runtime.onMessage.addListener(predict)
+chrome.runtime.onMessage.addListener(batchCalculate)
+
+function batchCalculate(req, sender, sendResponse) {
+    if(req.type === "batch"){
+        console.log("service uh: ", req.hrefs)
+        sendResponse({ status: "ROGER THAT" })
+    }
+    return true
+}
 
 function predict (req, sender, sendResponse) {
 
