@@ -48,10 +48,30 @@ async function getPageContents() {
     });
 }
 
+async function getPageLinks() {
+
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: () => {
+            const anchorElements = document.querySelectorAll('a')
+            const hrefs = Array.from(anchorElements).map((element) => element.href)
+            return hrefs
+        },
+    }, (result) => {
+        if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+            return;
+        }
+      const extractedLinks = result[0]
+      console.log("All URLS :", extractedLinks.result);
+    });
+}
+
 async function getPredictionResults() {
 
     await getCurrentTab()
-    await getPageContents()
+    //await getPageContents()
+    await getPageLinks()
     var req = {
             type: "predict",
             url: tab.url
