@@ -59,10 +59,36 @@ chrome.runtime.onConnect.addListener(port => {
 chrome.runtime.onMessage.addListener(predict)
 chrome.runtime.onMessage.addListener(batchCalculate)
 
-function batchCalculate(req, sender, sendResponse) {
-    if(req.type === "batch"){
-        console.log("service uh: ", req.hrefs)
-        sendResponse({ status: "ROGER THAT" })
+// Iterates all links present in a website, to calculate a more accurate phishing score
+async function batchCalculate(req, sender, sendResponse) {
+    let count = 0
+    let scoreTotal = 0
+
+    try {
+        if(req.type === "batch"){
+
+            // index < req.hrefs.length - TODO: having this blocks the entire UI. Have to see how to fix it
+            for (let index = 0; index < 1; index++){
+                const response = await fetch('http://127.0.0.1:8080/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url: req.hrefs[index] })
+                })
+
+                const data = await response.json()
+
+                if(data.prediction){
+                    scoreTotal += data.prediction
+                    count++
+                }
+            }
+            sendResponse({ status: "ROGER THAT", score: scoreTotal })
+        }
+    } catch (error) {
+        console.error('Error:', error) 
+        throw error; 
     }
     return true
 }
@@ -75,7 +101,7 @@ function predict (req, sender, sendResponse) {
         "prediction": "-",
         "status": "UNKNOWN"
     }
-    console.log("predict execution")
+    console.log("prediction score execution")
 
     if(req.type === "predict"){
         fetch('http://127.0.0.1:8080/predict', {
@@ -98,8 +124,8 @@ function predict (req, sender, sendResponse) {
                 console.error('Error:', error); // Handle any errors
                 sendResponse(fallbackValue)
             })
-        return true
     }
+    return true
 }
 
 /* 

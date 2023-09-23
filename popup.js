@@ -57,10 +57,6 @@ async function getPageLinks() {
             return hrefs
         },
     }, (result) => {
-        if (chrome.runtime.lastError) {
-            console.error(chrome.runtime.lastError);
-            return;
-        }
         const extractedLinks = result[0]
 
         var req = {
@@ -70,10 +66,10 @@ async function getPageLinks() {
 
         chrome.runtime.sendMessage(req, res => {
             if(chrome.runtime.lastError) {
-                console.log("Timeout")
-                setTimeout(getPageLinks)
+                console.log("Batch Process Timeout")
+                setTimeout(getPageLinks, 1000)
             } else {
-                console.log("success:", res.status)
+                console.log("success:", res.status, res.score)
             }
         })
         // console.log("All URLS :", extractedLinks.result);
