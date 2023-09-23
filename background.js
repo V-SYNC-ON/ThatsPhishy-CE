@@ -1,8 +1,49 @@
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.action.setBadgeText({
-    text: 'SAFE'
-  });
-});
+// Set Tab Specific custom Badge Text
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
+
+    if(!changeInfo.url) return 
+    let statusText = await updateBadge(changeInfo.url)
+    statusText = statusText.toUpperCase()
+
+    console.log("new " + statusText)
+
+    chrome.action.setBadgeText({
+        text: statusText,
+        tabId: tabId
+    })
+    if(statusText == "RISKY")
+        chrome.action.setBadgeBackgroundColor({
+            color: "red",
+            tabId: tabId
+        })
+
+    if(statusText == "SAFE")
+        chrome.action.setBadgeBackgroundColor({
+            color: "green",
+            tabId: tabId
+        })
+})
+
+async function updateBadge(newUrl) {
+    try {
+        const response = await fetch('http://127.0.0.1:8080/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: newUrl })
+        });
+        
+        const data = await response.json();
+        console.log(data.status); 
+        return data.status;
+
+    } catch (error) {
+        console.error('Error:', error); 
+        throw error; 
+
+    }
+}
 
 chrome.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(message => { console.log(message) })

@@ -1,3 +1,4 @@
+
 // Reference to all result tags
 const description = document.getElementById("description")
 const domain = document.getElementById("domain")
@@ -6,10 +7,9 @@ const statusRank  = document.getElementById("status")
 
 const button = document.querySelector("button")
 
-prediction.textContent = '...'
-var tab
-
+// prediction.textContent = '...'
 let queryOptions = { active: true, lastFocusedWindow: true };
+var tab
 
 function toggleScreens() {
     const predictContainer = document.getElementById("predict-container")
@@ -29,6 +29,7 @@ function toggleScreens() {
 async function getCurrentTab() {
     [tab] = await chrome.tabs.query(queryOptions);
 }
+
 async function getPredictionResults() {
 
     await getCurrentTab()
@@ -54,6 +55,7 @@ async function getPredictionResults() {
         }
     )
     // ref: https://stackoverflow.com/questions/54181734/chrome-extension-message-passing-unchecked-runtime-lasterror-could-not-establi/54686484#54686484
+
 }
 
 
