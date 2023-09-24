@@ -23,8 +23,12 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
             color: "green",
             tabId: tabId
         })
-
-    else if(statusText == "UNKNOWN")
+    else if(statusText == "NOT RECOMMENDED")
+        chrome.action.setBadgeBackgroundColor({
+            color: "brown",
+            tabId: tabId
+        })
+    else 
         chrome.action.setBadgeBackgroundColor({
             color: "gray",
             tabId: tabId
@@ -38,7 +42,7 @@ async function updateBadge(newUrl) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url: newUrl })
+            body: JSON.stringify({ url: newUrl, language: "English" })
         });
         
         const data = await response.json();
@@ -64,6 +68,8 @@ async function batchCalculate(req, sender, sendResponse) {
     let count = 0
     let scoreTotal = 0
 
+    console.log("links", req.hrefs)
+
     try {
         if(req.type === "batch"){
 
@@ -74,7 +80,7 @@ async function batchCalculate(req, sender, sendResponse) {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ url: req.hrefs[index] })
+                    body: JSON.stringify({ url: req.hrefs[index], language: "English" })
                 })
 
                 const data = await response.json()
@@ -109,7 +115,7 @@ function predict (req, sender, sendResponse) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url: req.url })
+            body: JSON.stringify({ url: req.url, language: "English" })
         })
             .then(res => { 
                 return res.json()

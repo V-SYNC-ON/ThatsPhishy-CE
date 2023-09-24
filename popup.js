@@ -83,7 +83,8 @@ async function getPredictionResults() {
     await getPageLinks()
     var req = {
             type: "predict",
-            url: tab.url
+            url: tab.url,
+            language: "English"
         }
     console.log(tab.url)
 
@@ -98,9 +99,9 @@ async function getPredictionResults() {
                 prediction.textContent = res.prediction + "/100"
                 statusRank.textContent = res.status
 
-                if(res.status == "Safe") 
+                if(res.status == "safe") 
                     statusRank.className = "safe"
-                else if (res.status == "UNKNOWN")
+                else if (res.status == "UNKNOWN" || res.status == "not recommended")
                     statusRank.className = "not-recommended"
 
                 toggleScreens()
