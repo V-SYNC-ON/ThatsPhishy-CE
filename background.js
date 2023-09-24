@@ -23,8 +23,12 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
             color: "green",
             tabId: tabId
         })
-
-    else if(statusText == "UNKNOWN")
+    else if(statusText == "NOT RECOMMENDED")
+        chrome.action.setBadgeBackgroundColor({
+            color: "brown",
+            tabId: tabId
+        })
+    else 
         chrome.action.setBadgeBackgroundColor({
             color: "gray",
             tabId: tabId
@@ -38,7 +42,7 @@ async function updateBadge(newUrl) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url: newUrl })
+            body: JSON.stringify({ url: newUrl, language: "English" })
         });
         
         const data = await response.json();
@@ -57,6 +61,43 @@ chrome.runtime.onConnect.addListener(port => {
 })
 
 chrome.runtime.onMessage.addListener(predict)
+chrome.runtime.onMessage.addListener(batchCalculate)
+
+// Iterates all links present in a website, to calculate a more accurate phishing score
+async function batchCalculate(req, sender, sendResponse) {
+    let count = 0
+    let scoreTotal = 0
+
+    console.log("links", req.hrefs)
+
+    try {
+        if(req.type === "batch"){
+
+            // index < req.hrefs.length - TODO: having this blocks the entire UI. Have to see how to fix it
+            for (let index = 0; index < 1; index++){
+                const response = await fetch('http://127.0.0.1:8080/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url: req.hrefs[index], language: "English" })
+                })
+
+                const data = await response.json()
+
+                if(data.prediction){
+                    scoreTotal += data.prediction
+                    count++
+                }
+            }
+            sendResponse({ status: "ROGER THAT", score: scoreTotal })
+        }
+    } catch (error) {
+        console.error('Error:', error) 
+        throw error; 
+    }
+    return true
+}
 
 function predict (req, sender, sendResponse) {
 
@@ -66,7 +107,7 @@ function predict (req, sender, sendResponse) {
         "prediction": "-",
         "status": "UNKNOWN"
     }
-    console.log("predict execution")
+    console.log("prediction score execution")
 
     if(req.type === "predict"){
         fetch('http://127.0.0.1:8080/predict', {
@@ -74,7 +115,7 @@ function predict (req, sender, sendResponse) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url: req.url })
+            body: JSON.stringify({ url: req.url, language: "English" })
         })
             .then(res => { 
                 return res.json()
@@ -89,8 +130,8 @@ function predict (req, sender, sendResponse) {
                 console.error('Error:', error); // Handle any errors
                 sendResponse(fallbackValue)
             })
-        return true
     }
+    return true
 }
 
 /* 
