@@ -1,0 +1,6 @@
+{
+    "warning": {
+        "message": "This is a risky site!, This is a risky site!!",
+        "description": "tts alert message on entering a site"
+    }
+}
