@@ -1,40 +1,43 @@
 // Set Tab Specific custom Badge Text
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
 
-    if(!changeInfo.url) return 
-    let statusText = await updateBadge(changeInfo.url)
-    //statusText = statusText.toUpperCase()
-    statusText = (statusText ?? "UNKNOWN").toUpperCase();
 
-    console.log("new " + statusText)
+    if(changeInfo.status === "complete") {
+        console.log("if you see me, good luck", changeInfo.status, changeInfo.url, newTab.url)
+        let statusText = await updateBadge(newTab.url)
+        //statusText = statusText.toUpperCase()
+        statusText = (statusText ?? "UNKNOWN").toUpperCase();
 
-    chrome.action.setBadgeText({
-        text: statusText,
-        tabId: tabId
-    })
+        console.log("new " + statusText)
 
-    if(statusText == "RISKY") {
-        chrome.action.setBadgeBackgroundColor({
-            color: "red",
+        chrome.action.setBadgeText({
+            text: statusText,
             tabId: tabId
         })
-        ttsWarning()
+
+        if(statusText == "RISKY") {
+            chrome.action.setBadgeBackgroundColor({
+                color: "red",
+                tabId: tabId
+            })
+            ttsWarning()
+        }
+        else if(statusText == "SAFE")
+            chrome.action.setBadgeBackgroundColor({
+                color: "green",
+                tabId: tabId
+            })
+        else if(statusText == "NOT RECOMMENDED")
+            chrome.action.setBadgeBackgroundColor({
+                color: "brown",
+                tabId: tabId
+            })
+        else 
+            chrome.action.setBadgeBackgroundColor({
+                color: "gray",
+                tabId: tabId
+            })
     }
-    else if(statusText == "SAFE")
-        chrome.action.setBadgeBackgroundColor({
-            color: "green",
-            tabId: tabId
-        })
-    else if(statusText == "NOT RECOMMENDED")
-        chrome.action.setBadgeBackgroundColor({
-            color: "brown",
-            tabId: tabId
-        })
-    else 
-        chrome.action.setBadgeBackgroundColor({
-            color: "gray",
-            tabId: tabId
-        })
 })
 
 async function updateBadge(newUrl) {
