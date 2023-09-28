@@ -12,12 +12,14 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, newTab) => {
         text: statusText,
         tabId: tabId
     })
-    if(statusText == "RISKY")
+
+    if(statusText == "RISKY") {
         chrome.action.setBadgeBackgroundColor({
             color: "red",
             tabId: tabId
         })
-
+        ttsWarning()
+    }
     else if(statusText == "SAFE")
         chrome.action.setBadgeBackgroundColor({
             color: "green",
@@ -132,6 +134,12 @@ function predict (req, sender, sendResponse) {
             })
     }
     return true
+}
+
+function ttsWarning() {
+
+    warning = chrome.i18n.getMessage("warning")
+    chrome.tts.speak(warning)
 }
 
 /* 
